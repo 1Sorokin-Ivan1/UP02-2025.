@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход в систему | Эко-Логистика</title>
+    <style>
+        :root {
+            --primary: cornflowerblue;
+            --secondary: #27ae60;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --accent: #e74c3c;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            line-height: 1.6;
+            background-color: #f5f7fa;
+        }
+        
+        header {
+            background-color: var(--dark);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            width: 100px;
+            height: 50px;
+            margin-right: 10px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        nav li {
+            margin-left: 1.5rem;
+            position: relative;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 0;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        /* Стили для выпадающего меню */
+        .dropdown {
+            position: relative;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--dark);
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 0 0 5px 5px;
+            top: 100%;
+            left: 0;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: var(--primary);
+        }
+        
+        .dropdown > a::after {
+            content: ' ▾';
+            font-size: 0.8em;
+        }
+        
+        .login-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 200px);
+            padding: 2rem;
+        }
+        
+        .login-container {
+            width: 100%;
+            max-width: 500px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 3rem;
+            text-align: center;
+        }
+        
+        .login-title {
+            margin-bottom: 2rem;
+            color: var(--dark);
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        .login-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Open Sans', sans-serif;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(100, 149, 237, 0.2);
+        }
+        
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+        
+        .remember-me input {
+            margin-right: 0.5rem;
+        }
+        
+        .forgot-password a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .forgot-password a:hover {
+            color: var(--accent);
+        }
+        
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 0.8rem;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #c0392b;
+        }
+        
+        .register-link {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
+        }
+        
+        .register-link a {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .register-link a:hover {
+            color: var(--accent);
+        }
+        
+        .social-login {
+            margin-top: 2rem;
+        }
+        
+        .social-divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            color: #777;
+        }
+        
+        .social-divider::before,
+        .social-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #eee;
+            margin: 0 1rem;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #f5f5f5;
+            color: #555;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .social-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                margin-top: 1rem;
+            }
+            
+            nav li {
+                margin: 0.5rem 0;
+            }
+            
+            .dropdown-content {
+                position: static;
+                display: none;
+                box-shadow: none;
+            }
+            
+            .dropdown:hover .dropdown-content {
+                display: none;
+            }
+            
+            .dropdown.active .dropdown-content {
+                display: block;
+                margin-left: 1rem;
+            }
+            
+            .dropdown > a::after {
+                content: ' ▸';
+            }
+            
+            .login-container {
+                padding: 2rem;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="image/1.png" alt="Логотип Эко-Логистика" width="200" height="50">Эко-Логистика
+            </a>
+            <nav>
+                <ul>
+                    <li class="dropdown">
+                        <a href="About us.html"><i class="fas fa-info-circle"></i> О компании</a>
+                        <div class="dropdown-content">
+                            <a href="About us.html">О нас</a>
+                            <a href="xar.html">Характеристики</a>
+                            <a href="partner.html">Партнеры</a>
+                        </div>
+                    </li>
+                    
+                    <li class="dropdown">
+                        <a href="price list.html"><i class="fas fa-truck"></i> Услуги</a>
+                        <div class="dropdown-content">
+                            <a href="eco-delivery.html">Эко-доставка</a>
+                            <a href="carbon-footprint.html">Расчет углеродного следа</a>
+                            <a href="route-optimization.html">Оптимизация маршрутов</a>
+                        </div>
+                    </li>
+                    
+                    <li><a href="news.html"><i class="fas fa-newspaper"></i> Новости</a></li>
+                    
+                    <li class="dropdown">
+                        <a href="vacancy.html"><i class="fas fa-briefcase"></i> Карьера</a>
+                        <div class="dropdown-content">
+                            <a href="vacancy.html">Вакансии</a>
+                            <a href="trening and seminar.html">Тренинги</a>
+                        </div>
+                    </li>
+                    
+                    <li><a href="contact.html"><i class="fas fa-envelope"></i> Контакты</a></li>
+                    
+                    <li><a href="faq.html"><i class="fas fa-question-circle"></i> FAQ</a></li>
+
+                    <li><a href="Tipovoy-dogovor.html"><i class="fas fa-newspaper"></i>Типовой договор</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="login-section">
+        <div class="login-container">
+            <h2 class="login-title">Вход в систему</h2>
+            
+            <form action="#" method="post">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required placeholder="Введите ваш email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Пароль</label>
+                    <input type="password" id="password" name="password" required placeholder="Введите ваш пароль">
+                </div>
+                
+                <div class="remember-forgot">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember" name="remember">
+                        <label for="remember">Запомнить меня</label>
+                    </div>
+                    <div class="forgot-password">
+                        <a href="#">Забыли пароль?</a>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn">Войти</button>
+                
+                <div class="register-link">
+                    Нет аккаунта? <a href="register.html">Зарегистрируйтесь</a>
+                </div>
+                
+                <div class="social-login">
+                    <div class="social-divider">Или войдите через</div>
+                    <div class="social-icons">
+                        <a href="https://vk.com/feed" class="social-btn"><i class="fab fa-vk"></i></a>
+                        <a href="https://web.telegram.org/a/" class="social-btn"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+    
+    <footer>
+        <p> &copy;2025 Эко-логистика малого бизнеса | Все права защищены</p>
+        <p>Контактная информация: sorokinivan6776@gmail.com | +7 (922) 538 01 66</p>
+    </footer>
+
+    <script>
+        // Активация выпадающего меню на мобильных устройствах
+        document.querySelectorAll('.dropdown > a').forEach(dropdownToggle => {
+            dropdownToggle.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    const dropdown = this.parentElement;
+                    dropdown.classList.toggle('active');
+                    
+                    // Закрываем другие открытые dropdown
+                    document.querySelectorAll('.dropdown').forEach(otherDropdown => {
+                        if (otherDropdown !== dropdown && otherDropdown.classList.contains('active')) {
+                            otherDropdown.classList.remove('active');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
